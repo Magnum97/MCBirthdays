@@ -1,0 +1,102 @@
+//import com.github.jengelman.gradle.plugins.shadow.tasks.ConfigureShadowRelocation
+//import org.apache.tools.ant.filters.ReplaceTokens
+
+plugins {
+    id 'java'
+    id "io.freefair.lombok" version "4.1.6"
+    id 'net.minecrell.plugin-yml.bukkit' version '0.3.0'
+    id 'com.github.johnrengelman.shadow' version '5.1.0'
+}
+
+group = 'me.magnum.minecraft.plugin'
+//mainClassName = 'me.magnum.minecraft.plugin.Birthdays'
+
+repositories {
+    maven {
+        name 'papermc';
+        url 'https://papermc.io/repo/repository/maven-public/'
+    }
+    maven {
+        url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
+        content {
+            includeGroup 'org.bukkit'
+            includeGroup 'org.spigotmc'
+        }
+        maven { url = 'https://oss.sonatype.org/content/repositories/snapshots' }
+        maven { url = "https://repo.aikar.co/content/groups/aikar/" }
+        maven { url = "https://maven.sk89q.com/repo/" }
+        maven { url = 'https://ci.ender.zone/plugin/repository/everything/' }
+        maven { url = 'https://jitpack.io' }
+        mavenCentral()
+    }
+    dependencies {
+        /* Not shaded into final jar */
+        // compileOnly group: 'org.spigotmc', name: 'spigot', version: '1.15.2-R0.1-SNAPSHOT'
+        compileOnly 'org.spigotmc:spigot-api:1.14.4-R0.1-SNAPSHOT'
+        // The Spigot API with no shadowing. Requires the OSS repo.
+        compileOnly 'com.destroystokyo.paper:paper-api:1.15.2-R0.1-SNAPSHOT' // PaperMC API
+        /*  Below are shaded into final jar & relocated */
+        compile "io.papermc:paperlib:1.0.2" // Use PaperAPI and maintain Spigot compatability
+        implementation 'com.github.magnum97:Commands:master' // Fork of Aikar's Command Format
+        implementation 'com.github.kangarko:Foundation:5.1.8@jar' // Kangerko's Foundation library
+        compileOnly 'org.spigotmc:spigot-api:1.14.4-R0.1-SNAPSHOT'
+
+    }
+
+    bukkit {
+        // Default values can be overridden if needed
+        // name = 'TestPlugin'
+        // version = '1.0'
+        // description = 'This is a test plugin'
+        // website = 'https://example.com'
+        // author = 'Magnum1997'
+
+        // Plugin main class (required)
+        main = 'com.example.testplugin.TestPlugin'
+
+        // API version (should be set for 1.13+)
+        apiVersion = '1.13'
+
+        // Other possible properties from plugin.yml (optional)
+        load = 'STARTUP' // or 'POSTWORLD'
+        // authors = ['Notch', 'Notch2']
+        depend = ['WorldEdit']
+        softDepend = ['Essentials']
+        // loadBefore = ['BrokenPlugin']
+        prefix = 'TEST'
+        defaultPermission = 'OP' // 'TRUE', 'FALSE', 'OP' or 'NOT_OP'
+
+        commands {
+            test {
+                description = 'This is a test command!'
+                aliases = ['t']
+                permission = 'testplugin.test'
+                usage = 'Just run the command!'
+                // permissionMessage = 'You may not test this command!'
+            }
+        }
+
+        permissions {
+            'testplugin.*' {
+                children = ['testplugin.test']
+            }
+            'testplugin.test' {
+                description = 'Allows you to run the test command'
+                setDefault('OP') // 'TRUE', 'FALSE', 'OP' or 'NOT_OP'
+            }
+        }
+    }
+    compileJava {
+        options.compilerArgs += ["-parameters"]
+        options.fork = true
+        options.forkOptions.executable = 'javac'
+    }
+
+    shadowJar {
+//    archiveFileName = ${archivesBaseName}.${archiveExtension}
+        version = null
+        classifier = null
+        minimize()
+    }
+//tasks.shadowJar.dependsOn tasks.relocateShadowJar
+}
