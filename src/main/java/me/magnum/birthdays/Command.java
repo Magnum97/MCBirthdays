@@ -31,7 +31,6 @@ public class Command extends SimpleCommand {
 		}
 		else if ((action.equalsIgnoreCase("set") && (args.length > 2))) {
 			config.set(args[1],args[2]);
-			config.saveConfig();
 			config.reloadConfig();
 			tell(args[1] + " is set to " + args[2]);
 		}
