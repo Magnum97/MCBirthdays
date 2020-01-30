@@ -14,6 +14,7 @@ public class Birthdays extends SimplePlugin {
 	@Getter
 	private static Birthdays birthdays;
 	public SimpleConfigManager manager;
+	@Getter public SimpleConfig mainConfig;
 
 	@Getter
 	public SimpleConfig mainConfig;
@@ -37,6 +38,7 @@ public class Birthdays extends SimplePlugin {
 		this.mainConfig.saveConfig();
 
 	}
+
 }
 
 
