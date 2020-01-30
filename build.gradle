@@ -45,11 +45,11 @@ repositories {
 
     bukkit {
         // Default values can be overridden if needed
-         name = 'Birthdays'
-         version = '1.0'
-         description = 'This is a test plugin'
-         website = 'https://example.com'
-         author = 'Magnum1997'
+        name = 'Birthdays'
+        version = '1.0'
+        description = 'This is a test plugin'
+        website = 'https://example.com'
+        author = 'Magnum1997'
 
         // Plugin main class (required)
         main = 'me.magnum.Birthdays'
@@ -61,26 +61,26 @@ repositories {
         load = 'STARTUP' // or 'POSTWORLD'
         // authors = ['Notch', 'Notch2']
 //        depend = ['WorldEdit']
-//        softDepend = ['Essentials']
+        softDepend = ['Essentials']
         // loadBefore = ['BrokenPlugin']
-        prefix = 'TEST'
+        prefix = 'Birthdays'
         defaultPermission = 'OP' // 'TRUE', 'FALSE', 'OP' or 'NOT_OP'
 
         commands {
-            test {
+            config {
                 description = 'This is a test command!'
-                aliases = ['t']
-                permission = 'testplugin.test'
+                aliases = ['conf']
+                permission = 'birthdays.config'
                 usage = 'Just run the command!'
-                // permissionMessage = 'You may not test this command!'
+                permissionMessage = 'You may not test this command!'
             }
         }
 
         permissions {
-            'testplugin.*' {
-                children = ['testplugin.test']
+            'birthdays.*' {
+                children = ['birthdays.test']
             }
-            'testplugin.test' {
+            'birthdays.test' {
                 description = 'Allows you to run the test command'
                 setDefault('OP') // 'TRUE', 'FALSE', 'OP' or 'NOT_OP'
             }
