@@ -2,9 +2,6 @@ package me.magnum.birthdays;
 
 import me.magnum.Birthdays;
 import org.mineacademy.fo.command.SimpleCommand;
-import org.mineacademy.fo.plugin.SimplePlugin;
-
-import javax.annotation.CheckForNull;
 
 public class Command extends SimpleCommand {
 
@@ -31,6 +28,7 @@ public class Command extends SimpleCommand {
 		}
 		else if ((action.equalsIgnoreCase("set") && (args.length > 2))) {
 			config.set(args[1],args[2]);
+			config.saveConfig();
 			config.reloadConfig();
 			tell(args[1] + " is set to " + args[2]);
 		}

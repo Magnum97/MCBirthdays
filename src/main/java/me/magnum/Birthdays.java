@@ -13,11 +13,8 @@ public class Birthdays extends SimplePlugin {
 
 	@Getter
 	private static Birthdays birthdays;
-	public SimpleConfigManager manager;
-	@Getter public SimpleConfig mainConfig;
-
-	@Getter
-	public SimpleConfig mainConfig;
+	private SimpleConfigManager manager;
+	@Getter private SimpleConfig mainConfig;
 
 	public SimpleConfig messages;
 
@@ -30,7 +27,7 @@ public class Birthdays extends SimplePlugin {
 
 		this.manager = new SimpleConfigManager(this);
 
-		this.mainConfig = manager.getNewConfig("config.yml", header);
+		this.mainConfig = manager.getNewConfig("config.yml", header,true);
 		this.messages = manager.getNewConfig("misc/messages.yml");
 
 		this.mainConfig.set("path1", "value1", comments);
